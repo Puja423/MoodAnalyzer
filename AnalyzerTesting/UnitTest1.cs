@@ -17,6 +17,24 @@ namespace AnalyzerTesting
             Assert.AreEqual(expected, mood);
 
         }
+
+        [TestMethod]
+        public void AnalyzeHappyMood()
+        {
+            //Arrange
+           
+            string message= "I am in Any Mood";
+            string expectedMood = "HAPPY";
+            MoodAnalyser moodAnalyser = new MoodAnalyser(message);
+
+            //Act
+            string actualMood = moodAnalyser.AnalyseMood();
+
+            //Assert
+            Assert.AreEqual(expectedMood, actualMood);
+        }
+
+
     }
 }
     
