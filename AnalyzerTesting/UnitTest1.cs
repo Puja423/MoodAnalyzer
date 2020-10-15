@@ -12,7 +12,7 @@ namespace AnalyzerTesting
             string expected = "SAD";
             string message = "I am Sad now";
             MoodAnalyser moodAnalyser = new MoodAnalyser(message);
-       
+
             string mood = moodAnalyser.AnalyseMood();
             Assert.AreEqual(expected, mood);
 
