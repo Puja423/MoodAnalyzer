@@ -13,7 +13,8 @@ namespace MoodAnalyzer
             NO_SUCH_FIELD,
             NO_SUCH_METHOD,
             NO_SUCH_CLASS,
-            OBJECT_CREATION_ISSUE
+            OBJECT_CREATION_ISSUE,
+                NO_SUCH_CONSTRUCTOR
         }
 
         private readonly ExceptionType type;
