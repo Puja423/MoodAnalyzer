@@ -4,28 +4,30 @@ using MoodAnalyzer;
 namespace AnalyzerTesting
 {
     [TestClass]
-    public class UnitTest1
+    public class TestMoodAnalyser
     {
         [TestMethod]
-        public void GivenMood_ReturnSad()
+        public void AnalyzeSadMood()
         {
-            string expected = "SAD";
-            string message = "I am Sad now";
-            MoodAnalyser moodAnalyser = new MoodAnalyser(message);
+            //Arrange
+            string msg = "I am in Sad Mood";
+            MoodAnalyser moodAnalyser = new MoodAnalyser(msg);
+            string expectedMood = "SAD";
 
-            string mood = moodAnalyser.AnalyseMood();
-            Assert.AreEqual(expected, mood);
+            //Act
+            string actualMood = moodAnalyser.AnalyseMood();
 
+            //Assert
+            Assert.AreEqual(expectedMood, actualMood);
         }
 
         [TestMethod]
         public void AnalyzeHappyMood()
         {
             //Arrange
-           
-            string message= "I am in Any Mood";
+            string msg = "I am in Any Mood";
+            MoodAnalyser moodAnalyser = new MoodAnalyser(msg);
             string expectedMood = "HAPPY";
-            MoodAnalyser moodAnalyser = new MoodAnalyser(message);
 
             //Act
             string actualMood = moodAnalyser.AnalyseMood();
@@ -37,6 +39,3 @@ namespace AnalyzerTesting
 
     }
 }
-    
-
-

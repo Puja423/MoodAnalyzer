@@ -7,26 +7,32 @@ namespace MoodAnalyzer
 {
     public class MoodAnalyser
     {
-        private string message;
+        string mood;
+        string message;
 
         public MoodAnalyser()
         {
+            mood = "";
         }
 
         public MoodAnalyser(string message)
         {
             this.message = message;
         }
+
         public string AnalyseMood()
         {
-            if (this.message.Contains("Sad"))
+            string regexStr = "^(.*[ ])*[sSaAdD]{3}([ ].*)*";
+            Regex regexExp = new Regex(regexStr);
+            try
             {
-                return "SAD";
+                mood = regexExp.IsMatch(this.message) ? "SAD" : "HAPPY";
             }
-            else
+            catch (Exception ex)
             {
                 return "HAPPY";
             }
+            return mood;
         }
     }
 }
