@@ -1,8 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoodAnalyzer;
+using MoodAnalyzerProgram;
 
 namespace AnalyzerTesting
 {
+
+   
     [TestClass]
     public class TestMoodAnalyser
     {
@@ -35,6 +38,7 @@ namespace AnalyzerTesting
             //Assert
             Assert.AreEqual(expectedMood, actualMood);
         }
+
         [TestMethod]
         public void AnalyzeNullExceptionHandling()
         {
@@ -43,7 +47,7 @@ namespace AnalyzerTesting
             MoodAnalyser moodAnalyser = new MoodAnalyser(msg);
 
             //Act => Assert
-            Assert.ThrowsException<MoodAnalysisException>(() => moodAnalyser.AnalyseMood());
+            Assert.ThrowsException<MoodAnalyserException>(() => moodAnalyser.AnalyseMood());
         }
 
         [TestMethod]
@@ -52,7 +56,7 @@ namespace AnalyzerTesting
             //Arrange
             string msg = null;
             MoodAnalyser moodAnalyser = new MoodAnalyser(msg);
-            string expectedMsg = "NULL";
+            string expectedMsg = "Mood should not be null";
             string actualMsg = "";
 
             //Act
@@ -60,7 +64,7 @@ namespace AnalyzerTesting
             {
                 actualMsg = moodAnalyser.AnalyseMood();
             }
-            catch (MoodAnalysisException exception)
+            catch (MoodAnalyserException exception)
             {
                 actualMsg = exception.Message;
             }
@@ -68,6 +72,7 @@ namespace AnalyzerTesting
             //Assert
             Assert.AreEqual(expectedMsg, actualMsg);
         }
+
         [TestMethod]
         public void AnalyzeEmptyExceptionHandling()
         {
@@ -76,7 +81,7 @@ namespace AnalyzerTesting
             MoodAnalyser moodAnalyser = new MoodAnalyser(msg);
 
             //Act => Assert
-            Assert.ThrowsException<MoodAnalysisException>(() => moodAnalyser.AnalyseMood());
+            Assert.ThrowsException<MoodAnalyserException>(() => moodAnalyser.AnalyseMood());
         }
 
         [TestMethod]
@@ -85,7 +90,7 @@ namespace AnalyzerTesting
             //Arrange
             string msg = "";
             MoodAnalyser moodAnalyser = new MoodAnalyser(msg);
-            string expectedMsg = "EMPTY";
+            string expectedMsg = "Mood should not be empty";
             string actualMsg = "";
 
             //Act
@@ -93,7 +98,7 @@ namespace AnalyzerTesting
             {
                 actualMsg = moodAnalyser.AnalyseMood();
             }
-            catch (MoodAnalysisException exception)
+            catch (MoodAnalyserException exception)
             {
                 actualMsg = exception.Message;
             }
@@ -101,5 +106,137 @@ namespace AnalyzerTesting
             //Assert
             Assert.AreEqual(expectedMsg, actualMsg);
         }
+
+        [TestMethod]
+        public void MoodAnalysisBuilder_ShouldReturnMoodAnalysisObject()
+        {
+            //Arrange
+            string className = "MoodAnalyser";
+            string constructorName = className;
+            object expectedInstance = new MoodAnalyser();
+
+            //Add
+            object actualInstance = MoodAnalysisReflecter.BuildMoodAnalysis(className, constructorName);
+
+            //Assert
+            expectedInstance.Equals(actualInstance);
+        }
+
+        [TestMethod]
+        public void TestMoodAnalysisBuilder_WrongClassName_ThrowClassNotFoundException()
+        {
+            //Arrange
+            string className = "MoodAnalyserWrongName";
+            string constructorName = className;
+            string expected = "Class not found";
+            string actual;
+
+            //Add
+            try
+            {
+                object actualInstance = MoodAnalysisReflecter.BuildMoodAnalysis(className, constructorName);
+                actual = actualInstance.ToString();
+            }
+            catch (MoodAnalyserException e)
+            {
+                actual = e.Message;
+            }
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestMoodAnalysisBuilder_WrongConstructorName_ThrowConstructorNotFoundException()
+        {
+            //Arrange
+            string className = "MoodAnalyser";
+            string constructorName = "Wrong" + className;
+            string expected = "Constructor not found";
+            string actual;
+
+            //Add
+            try
+            {
+                object actualInstance = MoodAnalysisReflecter.BuildMoodAnalysis(className, constructorName);
+                actual = actualInstance.ToString();
+            }
+            catch (MoodAnalyserException e)
+            {
+                actual = e.Message;
+            }
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestParameterizedMoodAnalysisBuilder_ShouldReturnMoodAnalysisObject()
+        {
+            //Arrange
+            string className = "MoodAnalyser";
+            string constructorName = className;
+            string message = "he is sad";
+            object expectedInstance = new MoodAnalyser(message);
+
+            //Add
+            object actualInstance = MoodAnalysisReflecter.BuildMoodAnalysis(className, constructorName, message);
+
+            //Assert
+            expectedInstance.Equals(actualInstance);
+        }
+
+        [TestMethod]
+        public void TestParameterizedMoodAnalysisBuilder_WrongClassName_ThrowClassNotFoundException()
+        {
+            //Arrange
+            string className = "MoodAnalyserWrongName";
+            string constructorName = className;
+            string message = "She is happy";
+            string expected = "Class not found";
+            string actual;
+
+            //Add
+            try
+            {
+                object actualInstance = MoodAnalysisReflecter.BuildMoodAnalysis(className, constructorName, message);
+                actual = actualInstance.ToString();
+            }
+            catch (MoodAnalyserException e)
+            {
+                actual = e.Message;
+            }
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestParameterizedMoodAnalysisBuilder_WrongConstructorName_ThrowConstructorNotFoundException()
+        {
+            //Arrange
+            string className = "MoodAnalyser";
+            string constructorName = "Wrong" + className;
+            string message = "She is happy";
+            string expected = "Constructor not found";
+            string actual;
+
+            //Add
+            try
+            {
+                object actualInstance = MoodAnalysisReflecter.BuildMoodAnalysis(className, constructorName, message);
+                actual = actualInstance.ToString();
+            }
+            catch (MoodAnalyserException e)
+            {
+                actual = e.Message;
+            }
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }
+
+
